@@ -9,7 +9,7 @@ namespace Shuble\Slurpy;
  *
  * @author  ALKOUM Dorian <dorian.alkoum@gmail.com>
  */
-class PdfTk
+class PdfToolkit
 {
     /**
      * Path to pdftk binary
