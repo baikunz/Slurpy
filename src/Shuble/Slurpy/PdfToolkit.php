@@ -3,7 +3,7 @@
 namespace Shuble\Slurpy;
 
 /**
- * Wrapper of the pdftk library
+ * Wrapper for the pdftk library
  *
  * @package Slurpy
  *
@@ -203,7 +203,7 @@ class PdfToolkit
      */
     protected function configure()
     {
-        $this->setOptions(array(
+        $this->addOptions(array(
             'input_pw'       => null,
             'encrypt_40bit'  => null,
             'encrypt_128bit' => null,
