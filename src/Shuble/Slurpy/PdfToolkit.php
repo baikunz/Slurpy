@@ -2,6 +2,8 @@
 
 namespace Shuble\Slurpy;
 
+use Shuble\Slurpy\Operation\OperationInterface;
+
 /**
  * Wrapper for the pdftk library
  *
@@ -28,7 +30,7 @@ class PdfToolkit
     /**
      * An array of file paths
      *
-     * @var array
+     * @var InputFile[]
      */
     protected $inputs = array();
 
@@ -42,7 +44,7 @@ class PdfToolkit
     /**
      * Operation to execute
      *
-     * @var string
+     * @var OperationInterface
      */
     protected $operation;
 
@@ -175,29 +177,6 @@ class PdfToolkit
         return $this->options;
     }
 
-    public static function getAvailableOperations()
-    {
-        return array(
-            'cat',
-            'shuffle',
-            'burst',
-            'generate_fdf',
-            'fill_form',
-            'background',
-            'multibackground',
-            'stamp',
-            'multistamp',
-            'dump_data',
-            'dump_data_utf8',
-            'dump_data_fields',
-            'dump_data_fields_ut8',
-            'update_info',
-            'update_info_utf8',
-            'attach_files',
-            'unpack_files',
-        );
-    }
-
     /**
      * Sets all options
      */
@@ -253,6 +232,37 @@ class PdfToolkit
     {
         $command = $this->binary;
 
+        // Input files
+        $inputPasswords = array();
+        foreach ($this->inputs as $input) {
+            $command .= sprintf(' %s=%s', $input->getHandle(), $input->getFilePath());
+
+            if (null !== $input->getPassword()) {
+                $inputPasswords[] = sprintf('%s=%s', $input->getHandle(), $input->getPassword());
+            }
+        }
+
+        if (!empty($inputPasswords)) {
+            $command .= sprintf(' input_pw %s', implode(' ', $inputPasswords));
+        }
+
+        // Operation
+        if (null !== $this->operation) {
+            $command .= $this->operation->getName();
+
+            if (!empty($this->operation->getArguments())) {
+                $args = $this->operation->getArguments();
+                array_map(escapeshellarg, $args);
+                $args = implode(' ', $args);
+
+                $command .= ' '. $args;
+            }
+        }
+
+        // Output
+        $command .= sprintf(' output %s', $this->output);
+
+        // Global options
         foreach ($options as $key => $option) {
             if (null === $option || false === $option) {
                 continue;
@@ -271,8 +281,6 @@ class PdfToolkit
                 $command .= sprintf(' %s %s', $key, $option);
             }
         }
-
-        $command .= ' '.escapeshellarg($input).' '.escapeshellarg($output);;
 
         return $command;
     }
