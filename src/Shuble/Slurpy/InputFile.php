@@ -31,4 +31,88 @@ class InputFile
      * @var string
      */
     protected $password;
+
+    /**
+     * Get input file path
+     *
+     * @return string
+     */
+    public function getFilePath()
+    {
+        return $this->filePath;
+    }
+
+    /**
+     * Sets input file path
+     *
+     * @param string $filePath
+     *
+     * @return InputFile
+     */
+    public function setFilePath($filePath)
+    {
+        $this->filePath = (string) $filePath;
+
+        return $this;
+    }
+
+    /**
+     * Get input file handle
+     *
+     * @return string
+     */
+    public function getHandle()
+    {
+        return $this->handle;
+    }
+
+    /**
+     * Set input file handle
+     *
+     * @param string $handle
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return InputFile
+     */
+    public function setHandle($handle)
+    {
+        if (!ctype_upper((string) $handle)) {
+            throw new \InvalidArgumentException(sprintf(
+                '"%s" is not a valid handle. A handle must be one or more upper-case letters',
+                $handle
+            ));
+        }
+
+        $this->handle = $handle;
+
+        return $this;
+    }
+
+    /**
+     * Get input file password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set Input file password
+     *
+     * @param string $password
+     *
+     * @return \Shuble\Slurpy\InputFile
+     */
+    public function setPassword($password)
+    {
+        $this->password = null === $password
+            ? null
+            : (string) $password
+        ;
+
+        return $this;
+    }
 }
