@@ -54,15 +54,16 @@ class PdfToolkit
      * @param string $binary
      * @param array  $options
      */
-    public function __construct($binary, array $options = array(), array $inputs = array(), $output = null, $operation = null)
+    public function __construct($binary, array $options = array(), array $inputs = array(), $output = null, OperationInterface $operation = null)
     {
         $this->configure();
 
-        $this->setBinary($binary);
         $this->setOptions($options);
-        $this->setInputs($inputs);
-        $this->setOutput($output);
-        $this->setOperation($operation);
+
+        $this->binary = $binary;
+        $this->inputs = $inputs;
+        $this->output = $output;
+        $this->operation = $operation;
     }
 
     /**
@@ -87,6 +88,49 @@ class PdfToolkit
     public function getBinary()
     {
         return $this->binary;
+    }
+
+    public function setInputs(array $inputs)
+    {
+        foreach ($inputs as $input) {
+            $this->addInput($input);
+        }
+
+        return $this;
+    }
+
+    public function addInput(InputFile $input)
+    {
+        $this->inputs[] = $input;
+
+        return $this;
+    }
+
+    public function getInputs()
+    {
+        return $this->inputs;
+    }
+
+    public function setOperation(OperationInterface $operation)
+    {
+        $this->operation = $operation;
+    }
+
+    public function getOperation()
+    {
+        return $this->operation;
+    }
+
+    public function setOutput($output)
+    {
+        $this->output = $output;
+
+        return $this;
+    }
+
+    public function getOutput()
+    {
+        return $this->output;
     }
 
     /**
@@ -129,45 +173,6 @@ class PdfToolkit
     }
 
     /**
-     * Adds options
-     *
-     * @param array $options
-     *
-     * @throws \InvalidArgumentException If an options is already set
-     *
-     * @return PdfTk
-     */
-    public function addOptions(array $options)
-    {
-        foreach ($options as $name => $default) {
-            $this->addOption($name, $default);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Adds an option
-     *
-     * @param string $name    Name of the option
-     * @param mixed  $default an optional default value
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @return PdfTk
-     */
-    public function addOption($name, $default = null)
-    {
-        if (array_key_exists($name, $this->options)) {
-            throw new \InvalidArgumentException(sprintf('The option \'%s\' already exists.', $name));
-        }
-
-        $this->options[$name] = $default;
-
-        return $this;
-    }
-
-    /**
      * Return the options
      *
      * @return array
@@ -178,12 +183,30 @@ class PdfToolkit
     }
 
     /**
+     * Returns the command for the given input and output files
+     *
+     * @codeCoverageIgnore
+     *
+     * @param  string $input   The input file
+     * @param  string $output  The ouput file
+     * @param  array  $options An optional array of options that will be used
+     *                         only for this command
+     *
+     * @return string
+     */
+    public function getCommand(array $options = array())
+    {
+        $options = $this->mergeOptions($options);
+
+        return $this->buildCommand($options);
+    }
+
+    /**
      * Sets all options
      */
     protected function configure()
     {
         $this->addOptions(array(
-            'input_pw'       => null,
             'encrypt_40bit'  => null,
             'encrypt_128bit' => null,
             'allow'          => null,
@@ -199,36 +222,17 @@ class PdfToolkit
     }
 
     /**
-     * Returns the command for the given input and output files
-     *
-     * TODO: take inputs / operation into account
-     *
-     * @param  string $input   The input file
-     * @param  string $output  The ouput file
-     * @param  array  $options An optional array of options that will be used
-     *                         only for this command
-     *
-     * @return string
-     */
-    public function getCommand($input, $output, array $options = array())
-    {
-        $options = $this->mergeOptions($options);
-
-        return $this->buildCommand($input, $output, $options);
-    }
-
-    /**
      * Builds the command string
      *
      * @param  string $input    Url or file location of the page to process
      * @param  string $output   File location to the image-to-be
      * @param  array  $options  An array of options
      *
-     * TODO: Take operation / inputs... into account
+     * @throws \InvalidArgumentException if an option value is an array
      *
      * @return string
      */
-    protected function buildCommand($input, $output, array $options = array())
+    protected function buildCommand(array $options = array())
     {
         $command = $this->binary;
 
@@ -247,14 +251,12 @@ class PdfToolkit
         }
 
         // Operation
-        if (null !== $this->operation) {
-            $command .= $this->operation->getName();
+        if (null !== $this->operation && null !== $this->operation->getName()) {
+            $command .= ' '. $this->operation->getName();
 
-            if (!empty($this->operation->getArguments())) {
-                $args = $this->operation->getArguments();
-                array_map(escapeshellarg, $args);
-                $args = implode(' ', $args);
-
+            $args = $this->operation->getArguments();
+            if (!empty($args)) {
+                $args = implode(' ', array_map('escapeshellarg', $args));
                 $command .= ' '. $args;
             }
         }
@@ -269,20 +271,59 @@ class PdfToolkit
             }
 
             if (true === $option) {
-                $command .= $key;
-            } else {
-                if (is_array($option)) {
-                    array_map(escapeshellarg, $option);
-                    $option = implode(' ', $option);
-                } else {
-                    $option = escapeshellarg($option);
-                }
+                $command .= ' '. $key;
 
-                $command .= sprintf(' %s %s', $key, $option);
+                continue;
             }
+
+            $option = is_array($option)
+                ? implode(' ', array_map('escapeshellarg', $option))
+                : escapeshellarg($option)
+            ;
+
+            $command .= sprintf(' %s %s', $key, $option);
         }
 
         return $command;
+    }
+
+    /**
+     * Adds options
+     *
+     * @param array $options
+     *
+     * @throws \InvalidArgumentException If an options is already set
+     *
+     * @return PdfTk
+     */
+    protected function addOptions(array $options)
+    {
+        foreach ($options as $name => $default) {
+            $this->addOption($name, $default);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Adds an option
+     *
+     * @param string $name    Name of the option
+     * @param mixed  $default an optional default value
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return PdfTk
+     */
+    protected function addOption($name, $default = null)
+    {
+        if (array_key_exists($name, $this->options)) {
+            throw new \InvalidArgumentException(sprintf('The option \'%s\' already exists.', $name));
+        }
+
+        $this->options[$name] = $default;
+
+        return $this;
     }
 
     /**
