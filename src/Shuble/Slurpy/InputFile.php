@@ -32,6 +32,13 @@ class InputFile
      */
     protected $password;
 
+    public function __construct($filePath = null, $handle = null, $password = null)
+    {
+        $this->filePath = $filePath;
+        $this->handle = $handle;
+        $this->password = $password;
+    }
+
     /**
      * Get input file path
      *
