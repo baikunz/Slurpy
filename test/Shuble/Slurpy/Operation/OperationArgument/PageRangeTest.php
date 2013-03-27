@@ -1,8 +1,8 @@
 <?php
 
-namespace Shuble\Slurpy\Operation;
+namespace Shuble\Slurpy\Operation\OperationArgument;
 
-use Shuble\Slurpy\Operation\PageRange;
+use Shuble\Slurpy\Operation\OperationArgument\PageRange;
 
 class PageRangeTest extends \PHPUnit_Framework_TestCase
 {

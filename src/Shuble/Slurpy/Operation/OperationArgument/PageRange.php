@@ -1,6 +1,6 @@
 <?php
 
-namespace Shuble\Slurpy\Operation;
+namespace Shuble\Slurpy\Operation\OperationArgument;
 
 /**
  * Page range
