@@ -32,6 +32,13 @@ class InputFile
      */
     protected $password;
 
+    /**
+     * Constructor
+     *
+     * @param string $filePath Path to file
+     * @param string $handle   Handle (alias) for internal reference to this file
+     * @param string $password Possword if input file is protected (Optional)
+     */
     public function __construct($filePath = null, $handle = null, $password = null)
     {
         $this->filePath = $filePath;
