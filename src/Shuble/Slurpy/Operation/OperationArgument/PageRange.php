@@ -65,9 +65,14 @@ class PageRange
      * @param string $fileHandle
      * @param array  $options
      */
-    public function __construct($fileHandle)
+    public function __construct($fileHandle, $startPage = null, $endPage = null, $qualifier = null, $rotation = null)
     {
         $this->setFileHandle($fileHandle);
+
+        $this->startPage = $startPage;
+        $this->endPage   = $endPage;
+        $this->qualifier = $qualifier;
+        $this->rotation  = $rotation;
     }
 
     public function setFileHandle($fileHandle)
