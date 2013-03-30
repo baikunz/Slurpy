@@ -218,36 +218,6 @@ class Slurpy
 
         list($status, $stdout, $stderr) = $this->executeCommand($command);
         $this->checkProcessStatus($status, $stdout, $stderr, $command);
-
-        // TODO: Deal with operations without output files...
-//         $this->checkOutput($output, $command);
-    }
-
-    /**
-     * Checks the specified output
-     *
-     * @param  string $output  The output filename
-     * @param  string $command The generation command
-     *
-     * @throws \RuntimeException if the output file generation failed
-     */
-    protected function checkOutput($output, $command)
-    {
-        // the output file must exist
-        if (!$this->fileExists($output)) {
-            throw new \RuntimeException(sprintf(
-                'The file \'%s\' was not created (command: %s).',
-                $output, $command
-            ));
-        }
-
-        // the output file must not be empty
-        if (0 === $this->filesize($output)) {
-            throw new \RuntimeException(sprintf(
-                'The file \'%s\' was created but is empty (command: %s).',
-                $output, $command
-            ));
-        }
     }
 
     /**
