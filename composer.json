@@ -1,0 +1,22 @@
+{
+    "name": "shuble/slurpy",
+    "type": "library",
+    "description": "php wrapper for pdftk commandline tool, and pdf form filler",
+    "keywords": ["pdftk", "pdf", "form", "filler"],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/process": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "dorian ALKOUM",
+            "email": "baikunz@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Shuble\\Slurpy": "src/"
+        }
+    }
+}
