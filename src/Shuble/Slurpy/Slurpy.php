@@ -204,10 +204,6 @@ class Slurpy
 
     public function generate(array $options = array() , $overwrite = false)
     {
-        if (null === $this->binary) {
-            throw new \LogicException('You must define the pdftk binary');
-        }
-
         if (empty($this->inputs)) {
             throw new \LogicException('You must define at least one input file');
         }
@@ -216,7 +212,7 @@ class Slurpy
             throw new \LogicException('You must define an output file');
         }
 
-        $this->prepareOutput($output, $overwrite);
+        $this->prepareOutput($this->output, $overwrite);
 
         $command = $this->getCommand($options);
 
