@@ -187,9 +187,9 @@ class Slurpy
      *
      * @codeCoverageIgnore
      *
-     * @param  string $input   The input file
-     * @param  string $output  The ouput file
-     * @param  array  $options An optional array of options that will be used
+     * @param string $input   The input file
+     * @param string $output  The ouput file
+     * @param array  $options An optional array of options that will be used
      *                         only for this command
      *
      * @return string
@@ -224,9 +224,9 @@ class Slurpy
     /**
      * Builds the command string
      *
-     * @param  string $input    Url or file location of the page to process
-     * @param  string $output   File location to the image-to-be
-     * @param  array  $options  An array of options
+     * @param string $input   Url or file location of the page to process
+     * @param string $output  File location to the image-to-be
+     * @param array  $options An array of options
      *
      * @throws \InvalidArgumentException if an option value is an array
      *
@@ -330,7 +330,7 @@ class Slurpy
      * Merges the given array of options to the instance options and returns
      * the result options array. It does NOT change the instance options.
      *
-     * @param  array $options
+     * @param array $options
      *
      * @return array
      */
