@@ -11,7 +11,7 @@ use Shuble\Slurpy\Operation\OperationInterface;
  *
  * @author  ALKOUM Dorian <dorian.alkoum@gmail.com>
  */
-class PdfToolkit
+class Slurpy
 {
     /**
      * Path to pdftk binary

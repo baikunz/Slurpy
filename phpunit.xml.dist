@@ -9,11 +9,16 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="src/autoload.php"
+         bootstrap="tests/bootstrap.php"
 >
     <testsuites>
         <testsuite name="Slurpy Test Suite">
-            <directory>./test</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory>./src/Shuble/Slurpy/</directory>
+        </whitelist>
+    </filter>
 </phpunit>

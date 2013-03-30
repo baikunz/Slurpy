@@ -1,6 +1,6 @@
 <?php
 
-namespace Shuble\Slurpy\Operation\OperationArgument;
+namespace Shuble\Slurpy\Tests\Operation\OperationArgument;
 
 use Shuble\Slurpy\Operation\OperationArgument\PageRange;
 

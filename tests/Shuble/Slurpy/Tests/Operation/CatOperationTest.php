@@ -1,6 +1,6 @@
 <?php
 
-namespace Shuble\Slurpy\Operation;
+namespace Shuble\Slurpy\Tests\Operation;
 
 use Shuble\Slurpy\Operation\CatOperation;
 

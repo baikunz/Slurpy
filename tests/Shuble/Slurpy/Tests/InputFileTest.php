@@ -1,8 +1,8 @@
 <?php
 
-namespace Shuble\Slurpy;
+namespace Shuble\Slurpy\Tests;
 
-use Shuble\Slurpy\PdfToolkit;
+use Shuble\Slurpy\InputFile;
 
 class InputFileTest extends \PHPUnit_Framework_TestCase
 {
