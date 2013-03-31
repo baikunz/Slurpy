@@ -3,7 +3,6 @@
 namespace Shuble\Slurpy\Tests;
 
 use Shuble\Slurpy\Operation\OperationInterface;
-use Shuble\Slurpy\Operation\OperationNoop;
 use Shuble\Slurpy\InputFile;
 use Shuble\Slurpy\Slurpy;
 
@@ -224,8 +223,11 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
             ->setBinary($binary)
             ->setInputs($inputs)
             ->setOutput($output)
-            ->setOperation($operation)
         ;
+
+        if (null !== $operation) {
+            $slurpy->setOperation($operation);
+        }
 
         $r = new \ReflectionMethod($slurpy, 'buildCommand');
         $r->setAccessible(true);
@@ -253,7 +255,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 'thebinary',
                 array(new InputFile('/path', 'HANDLE')),
                 '/the/output/path',
-                new OperationNoop(),
+                null,
                 array(),
                 "thebinary HANDLE=/path output /the/output/path"
             ),
@@ -261,7 +263,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 'thebinary',
                 array(new InputFile('/path', 'HANDLE', 'pa$$w0rd')),
                 '/the/output/path',
-                new OperationNoop(),
+                null,
                 array(),
                 'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd output /the/output/path'
             ),
@@ -269,7 +271,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 'thebinary',
                 array(new InputFile('/path', 'HANDLE', 'pa$$w0rd')),
                 '/the/output/path',
-                new OperationNoop(),
+                null,
                 array('flatten' => true),
                 'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd output /the/output/path flatten'
             ),
