@@ -48,9 +48,11 @@ class Factory
      *    )
      * @param string $output
      */
-    public function cat(array $inputs, $output = null)
+    public function cat(array $inputs, $output)
     {
         $slurpy = new Slurpy($this->binary);
+
+        $slurpy->setOutput($output);
 
         $operation = new CatOperation();
 
@@ -61,7 +63,6 @@ class Factory
                 throw new \InvalidArgumentException('You must specify a filepath for each input files');
             }
 
-            // InputFile data
             $handle = $this->generateFileHandle($index);
             $filePath = is_array($input) ? $input['filepath'] : $input;
             $filePassword = is_array($input) && !empty($input['password'])
@@ -75,7 +76,6 @@ class Factory
 
             $slurpy->addInput($inputFile);
 
-            // PageRange data
             $startPage = is_array($input) && !empty($input['start_page']) ? $input['start_page'] : null;
             $endPage = is_array($input) && !empty($input['end_page']) ? $input['end_page'] : null;
             $qualifier = is_array($input) && !empty($input['qualifier']) ? $input['qualifier'] : null;

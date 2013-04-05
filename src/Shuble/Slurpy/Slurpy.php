@@ -223,10 +223,10 @@ class Slurpy
     /**
      * Checks the process return status
      *
-     * @param  int   $status    The exit status code
-     * @param  string $stdout   The stdout content
-     * @param  string $stderr   The stderr content
-     * @param  string $command  The run command
+     * @param int    $status  The exit status code
+     * @param string $stdout  The stdout content
+     * @param string $stderr  The stderr content
+     * @param string $command The run command
      *
      * @throws \RuntimeException if the output file generation failed
      */
@@ -247,7 +247,7 @@ class Slurpy
      * Executes the given command via shell and returns the complete output as
      * a string
      *
-     * @param  string $command
+     * @param string $command
      *
      * @return array(status, stdout, stderr)
      */
@@ -267,8 +267,8 @@ class Slurpy
     /**
      * Prepares the specified output
      *
-     * @param  string  $filename  The output filename
-     * @param  boolean $overwrite Whether to overwrite the file if it already
+     * @param string  $filename  The output filename
+     * @param boolean $overwrite Whether to overwrite the file if it already
      *                            exist
      */
     protected function prepareOutput($filename, $overwrite)
@@ -451,7 +451,7 @@ class Slurpy
     /**
      * Wrapper for the "file_get_contents" function
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return string
      */
@@ -463,7 +463,7 @@ class Slurpy
     /**
      * Wrapper for the "file_exists" function
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return boolean
      */
@@ -475,7 +475,7 @@ class Slurpy
     /**
      * Wrapper for the "is_file" method
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return boolean
      */
@@ -487,7 +487,7 @@ class Slurpy
     /**
      * Wrapper for the "filesize" function
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return integer or FALSE on failure
      */
@@ -499,7 +499,7 @@ class Slurpy
     /**
      * Wrapper for the "unlink" function
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return boolean
      */
@@ -511,7 +511,7 @@ class Slurpy
     /**
      * Wrapper for the "is_dir" function
      *
-     * @param  string $filename
+     * @param string $filename
      *
      * @return boolean
      */
@@ -523,7 +523,7 @@ class Slurpy
     /**
      * Wrapper for the mkdir function
      *
-     * @param  string $pathname
+     * @param string $pathname
      *
      * @return boolean
      */
