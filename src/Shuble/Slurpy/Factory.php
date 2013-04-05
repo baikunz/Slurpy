@@ -72,7 +72,7 @@ class Factory
 
             $inputFile->setHandle($handle);
             $inputFile->setFilePath($filePath);
-            $inputFile->setPassword(null);
+            $inputFile->setPassword($filePassword);
 
             $slurpy->addInput($inputFile);
 
