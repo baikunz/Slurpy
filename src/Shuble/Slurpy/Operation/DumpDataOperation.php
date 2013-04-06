@@ -48,4 +48,52 @@ class DumpDataOperation extends BaseOperation
 
         return $name;
     }
+
+    /**
+     * Sets whether this operation should dump data for fields or not
+     *
+     * @param boolean $fields
+     *
+     * @return DumpDataOperation
+     */
+    public function setFields($fields)
+    {
+        $this->fields = (boolean) $fields;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether this operation should dump data for fields or not
+     *
+     * @return boolean
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * Sets whether this operation should dump data as utf8 or not
+     *
+     * @param boolean $utf8
+     *
+     * @return DumpDataOperation
+     */
+    public function setUtf8($utf8)
+    {
+        $this->utf8 = (boolean) $utf8;
+
+        return $this;
+    }
+
+    /**
+     * Gets whether this operation should dump data as utf8 or not
+     *
+     * @return boolean
+     */
+    public function getUtf8()
+    {
+        return $this->utf8;
+    }
 }
