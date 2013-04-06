@@ -24,7 +24,7 @@ class StampOperation extends BaseOperation
      * @param string $stampFile Path to the stamp file
      * @param string $multi     Whether the stamp operation is multi or not
      */
-    public function __construct($stampFile, $multi = false)
+    public function __construct($stampFile = null, $multi = false)
     {
         $this->stampFile = $stampFile;
         $this->multi = $multi;
@@ -58,7 +58,7 @@ class StampOperation extends BaseOperation
      *
      * @return StampOperation
      */
-    protected function setMulti($multi)
+    public function setMulti($multi)
     {
         $this->multi = (boolean) $multi;
 
@@ -70,7 +70,7 @@ class StampOperation extends BaseOperation
      *
      * @return boolean
      */
-    protected function getMulti()
+    public function getMulti()
     {
         return $this->multi;
     }
@@ -82,7 +82,7 @@ class StampOperation extends BaseOperation
      *
      * @return StampOperation
      */
-    protected function setStampFile($stampFile)
+    public function setStampFile($stampFile)
     {
         $this->stampFile = $stampFile;
 
@@ -94,7 +94,7 @@ class StampOperation extends BaseOperation
      *
      * @return string
      */
-    protected function getStampFile()
+    public function getStampFile()
     {
         return $this->stampFile;
     }

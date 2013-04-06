@@ -24,7 +24,7 @@ class BackgroundOperation extends BaseOperation
      * @param string $backgroundFile Path to the background file
      * @param string $multi          Whether the background operation is multi or not
      */
-    public function __construct($backgroundFile, $multi = false)
+    public function __construct($backgroundFile = null, $multi = false)
     {
         $this->backgroundFile = $backgroundFile;
         $this->multi = $multi;
@@ -58,7 +58,7 @@ class BackgroundOperation extends BaseOperation
      *
      * @return BackgroundOperation
      */
-    protected function setMulti($multi)
+    public function setMulti($multi)
     {
         $this->multi = (boolean) $multi;
 
@@ -70,7 +70,7 @@ class BackgroundOperation extends BaseOperation
      *
      * @return boolean
      */
-    protected function getMulti()
+    public function getMulti()
     {
         return $this->multi;
     }
@@ -82,7 +82,7 @@ class BackgroundOperation extends BaseOperation
      *
      * @return BackgroundOperation
      */
-    protected function setBackgroundFile($backgroundFile)
+    public function setBackgroundFile($backgroundFile)
     {
         $this->backgroundFile = $backgroundFile;
 
@@ -94,7 +94,7 @@ class BackgroundOperation extends BaseOperation
      *
      * @return string
      */
-    protected function getBackgroundFile()
+    public function getBackgroundFile()
     {
         return $this->backgroundFile;
     }

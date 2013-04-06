@@ -23,7 +23,7 @@ class UpdateInfoOperation extends BaseOperation
      *
      * @param boolean $utf8 Whether the data input file is utf8 encoded or not
      */
-    public function __construct($dataFile, $utf8 = false)
+    public function __construct($dataFile = null, $utf8 = false)
     {
         $this->dataFile = $dataFile;
         $this->utf8 = $utf8;
@@ -57,7 +57,7 @@ class UpdateInfoOperation extends BaseOperation
      *
      * @return UpdateInfoOperation
      */
-    protected function setDataFile($dataFile)
+    public function setDataFile($dataFile)
     {
         $this->dataFile = $dataFile;
 
@@ -69,7 +69,7 @@ class UpdateInfoOperation extends BaseOperation
      *
      * @return string
      */
-    protected function getDataFile()
+    public function getDataFile()
     {
         return $this->dataFile;
     }
@@ -81,7 +81,7 @@ class UpdateInfoOperation extends BaseOperation
      *
      * @return UpdateInfoOperation
      */
-    protected function setUtf8($utf8)
+    public function setUtf8($utf8)
     {
         $this->utf8 = (boolean) $utf8;
 
@@ -93,7 +93,7 @@ class UpdateInfoOperation extends BaseOperation
      *
      * @return boolean
      */
-    protected function getUtf8()
+    public function getUtf8()
     {
         return $this->utf8;
     }
