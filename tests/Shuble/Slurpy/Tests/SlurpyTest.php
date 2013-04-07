@@ -309,4 +309,41 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
             ),
         );
     }
+
+    public function testCheckProcessStatus()
+    {
+        $slurpy = $this->getMock(
+            'Shuble\Slurpy\Slurpy',
+            array(
+                'configure',
+            ),
+            array(),
+            '',
+            false
+        );
+
+        $r = new \ReflectionMethod($slurpy, 'checkProcessStatus');
+        $r->setAccessible(true);
+
+        try {
+            $r->invokeArgs($slurpy, array(0, '', '', 'the command'));
+            $this->anything('0 status means success');
+        } catch (\RuntimeException $e) {
+            $this->fail('0 status means success');
+        }
+
+        try {
+            $r->invokeArgs($slurpy, array(1, '', '', 'the command'));
+            $this->anything('1 status means failure, but no stderr content');
+        } catch (\RuntimeException $e) {
+            $this->fail('1 status means failure, but no stderr content');
+        }
+
+        try {
+            $r->invokeArgs($slurpy, array(1, '', 'Could not connect to X', 'the command'));
+            $this->fail('1 status means failure');
+        } catch (\RuntimeException $e) {
+            $this->anything('1 status means failure');
+        }
+    }
 }
