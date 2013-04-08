@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * This file is part of the Slurpy package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @license MIT License
+ */
+
 namespace Shuble\Slurpy;
 
 use Shuble\Slurpy\Operation\AttachFilesOperation;
@@ -24,6 +32,10 @@ use Shuble\Slurpy\Operation\CatOperation;
 use Shuble\Slurpy\Operation\OperationArgument\PageRange;
 use Shuble\Slurpy\InputFile;
 
+/**
+ *
+ * @author dorian ALKOUM <baikunz@gmail.com>
+ */
 class Factory
 {
     /**

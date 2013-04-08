@@ -10,7 +10,6 @@
 
 namespace Shuble\Slurpy\Operation;
 
-use Shuble\Slurpy\Operation\OperationInterface;
 use Shuble\Slurpy\Operation\OperationArgument\PageRange;
 
 /**
@@ -24,7 +23,7 @@ use Shuble\Slurpy\Operation\OperationArgument\PageRange;
  *
  * @author dorian ALKOUM <baikunz@gmail.com>
  */
-class CatOperation implements OperationInterface
+class CatOperation extends BaseOperation
 {
     /**
      * An array of page ranges as arguments
