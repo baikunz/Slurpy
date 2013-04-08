@@ -2,10 +2,24 @@
 
 namespace Shuble\Slurpy\Operation;
 
-use Shuble\Slurpy\Operation\OperationInterface;
 use Shuble\Slurpy\Operation\OperationArgument\PageRange;
 
-class ShuffleOperation implements OperationInterface
+/**
+ * Collates pages from input PDFs to create a new PDF.Works like
+ * the cat operation except that it takes one page at a time from
+ * each page range to assemble the output PDF. If one range runs
+ * out of pages, it continues with the remaining ranges.
+ * Ranges can use all of the features described above for cat,
+ * like reverse page ranges, multiple ranges from a single PDF,
+ * and page rotation. This feature was designed to help collate PDF
+ * pages after scanning paper documents.
+ *
+ * @see PageRange
+ * @link http://www.pdflabs.com/docs/pdftk-man-page/#dest-op-shuffle
+ *
+ * @author dorian ALKOUM <baikunz@gmail.com>
+ */
+class ShuffleOperation extends BaseOperation
 {
     /**
      * An array of page ranges as arguments
