@@ -16,7 +16,7 @@ Add to your `composer.json`:
 ```json
 {
     "require" :  {
-        "baikunz/slurpy": "*"
+        "shuble/slurpy": "*"
     }
 }
 ```
