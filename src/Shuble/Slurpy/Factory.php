@@ -3,21 +3,13 @@
 namespace Shuble\Slurpy;
 
 use Shuble\Slurpy\Operation\AttachFilesOperation;
-
 use Shuble\Slurpy\Operation\UpdateInfoOperation;
-
 use Shuble\Slurpy\Operation\UnpackFilesOperation;
-
 use Shuble\Slurpy\Operation\DumpDataOperation;
-
 use Shuble\Slurpy\Operation\StampOperation;
-
 use Shuble\Slurpy\Operation\FillFormOperation;
-
 use Shuble\Slurpy\Operation\GenerateFdfOperation;
-
 use Shuble\Slurpy\Operation\BurstOperation;
-
 use Shuble\Slurpy\Operation\BackgroundOperation;
 use Shuble\Slurpy\Operation\ShuffleOperation;
 use Shuble\Slurpy\Operation\CatOperation;
@@ -58,7 +50,7 @@ class Factory
      *            'filepath' => 'path/to/file1.pdf',
      *            'password' => 'pa$$word',
      *            'start_page' => 1,
-     *            'end_page' => end,
+     *            'end_page' => 'end',
      *            'qualifier' => 'odd',
      *            'rotation' => 'east',
      *        ),
