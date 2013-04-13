@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Slurpy by baikunz</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Slurpy</h1>
+        <p class="header">Slurpy is a PHP5 wrapper for the pdftk command-line tool for working with PDF.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/baikunz/Slurpy/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/baikunz/Slurpy/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/baikunz/Slurpy">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/baikunz">baikunz</a></p>
+
+
+      </header>
+      <section>
+        <h1>Slurpy</h1>
+
+<p>Slurpy is a PHP5 wrapper for the <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> command-line tool
+for working with PDF. This library is largely inspired by <a href="https://github.com/KnpLabs/snappy">Snappy</a> from KnpLabs, 
+a library for generating images or pdf from html. Some of the Slurpy code comes directly from Snappy.</p>
+
+<p>In order to use Slurpy you will have to download <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> for
+either Windows, Mac OSX or linux.</p>
+
+<p><a href="http://travis-ci.org/baikunz/Slurpy"><img src="https://secure.travis-ci.org/baikunz/Slurpy.png?branch=master" alt="Build Status"></a></p>
+
+<h2>Installation using <a href="http://getcomposer.org/">Composer</a>
+</h2>
+
+<p>Add to your <code>composer.json</code>:</p>
+
+<div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">"require"</span> <span class="p">:</span>  <span class="p">{</span>
+        <span class="nt">"baikunz/slurpy"</span><span class="p">:</span> <span class="s2">"*"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>Installation of the <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> binary</h2>
+
+<p>You have to follow instructions on the pdftk web page to install the pdftk package. Either by downloading
+an installer if you run on Windows or Mac OSX or compiling it from source on linux. </p>
+
+<h2>Simple usage</h2>
+
+<p>Please refer to the <a href="http://www.pdflabs.com/docs/pdftk-man-page/">pdftk documentation</a> for more details
+on each operations.</p>
+
+<h3>Create the factory</h3>
+
+<p>Slurpy comes with a simple factory for dealing with pdftk operations in their simple forms.</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">require_once</span> <span class="s1">'/path/to/slurpy/src/autoload.php'</span><span class="p">;</span>
+
+<span class="c1">// Create a new factory instance, give it your path to pdftk binary</span>
+<span class="nv">$factory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Shuble\Slurpy\Factory</span><span class="p">(</span><span class="s1">'/path/to/pdftk'</span><span class="p">);</span>
+</pre></div>
+
+<h3>Catenate PDF files</h3>
+
+<p>Assembles ("catenates") pages from input PDFs to create a new PDF.
+Use cat to merge PDF pages or to split PDF pages from documents.
+You can also use it to rotate PDF pages. Page order in the new PDF
+is specified by the order of the inputs array.</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Shuble\Slurpy\Operation\OperationArgument\PageRange</span><span class="p">;</span>
+
+<span class="nv">$inputs</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'/path/to/file1.pdf'</span><span class="p">,</span>
+    <span class="s1">'/path/to/file2.pdf'</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span>
+        <span class="s1">'filepath'</span>   <span class="o">=&gt;</span> <span class="s1">'/path/to/file3.pdf'</span><span class="p">,</span>
+        <span class="s1">'password'</span>   <span class="o">=&gt;</span> <span class="s1">'pa$$word'</span><span class="p">,</span>
+        <span class="s1">'start_page'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'end_page'</span>   <span class="o">=&gt;</span> <span class="s1">'end'</span><span class="p">,</span>
+        <span class="s1">'qualifier'</span>  <span class="o">=&gt;</span> <span class="nx">PageRange</span><span class="o">::</span><span class="na">QUALIFIER_ODD</span><span class="p">,</span>
+        <span class="s1">'rotation'</span>   <span class="o">=&gt;</span> <span class="nx">PageRange</span><span class="o">::</span><span class="na">ROTATION_EAST</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$output</span> <span class="o">=</span> <span class="s1">'/path/to/output.pdf'</span><span class="p">;</span>
+
+<span class="c1">// Creates a Slurpy instance</span>
+<span class="nv">$slurpy</span> <span class="o">=</span> <span class="nv">$factory</span><span class="o">-&gt;</span><span class="na">cat</span><span class="p">(</span><span class="nv">$inputs</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+<span class="c1">// Run the operation</span>
+<span class="nv">$slurpy</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+
+<p>Now, <code>/path/to/ouput.pdf</code> contains the 3 pdfs, with only odd pages rotated to east for the third pdf. </p>
+
+<h3>Shuffle PDF files</h3>
+
+<p>Collates pages from input PDFs to create a new PDF. Works like the cat operation except that it takes
+one page at a time from each page range to assemble the output PDF. If one range runs out of pages,
+it continues with the remaining ranges. This feature was designed to help collate PDF pages after
+scanning paper documents.</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">use</span> <span class="nx">Shuble\Slurpy\Operation\OperationArgument\PageRange</span><span class="p">;</span>
+
+<span class="nv">$inputs</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'/path/to/file1.pdf'</span><span class="p">,</span>
+    <span class="s1">'/path/to/file2.pdf'</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span>
+        <span class="s1">'filepath'</span>   <span class="o">=&gt;</span> <span class="s1">'/path/to/file3.pdf'</span><span class="p">,</span>
+        <span class="s1">'password'</span>   <span class="o">=&gt;</span> <span class="s1">'pa$$word'</span><span class="p">,</span>
+        <span class="s1">'start_page'</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s1">'end_page'</span>   <span class="o">=&gt;</span> <span class="s1">'end'</span><span class="p">,</span>
+        <span class="s1">'qualifier'</span>  <span class="o">=&gt;</span> <span class="nx">PageRange</span><span class="o">::</span><span class="na">QUALIFIER_ODD</span><span class="p">,</span>
+        <span class="s1">'rotation'</span>   <span class="o">=&gt;</span> <span class="nx">PageRange</span><span class="o">::</span><span class="na">ROTATION_EAST</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">);</span>
+
+<span class="nv">$output</span> <span class="o">=</span> <span class="s1">'/path/to/output.pdf'</span><span class="p">;</span>
+
+<span class="c1">// Creates a Slurpy instance</span>
+<span class="nv">$slurpy</span> <span class="o">=</span> <span class="nv">$factory</span><span class="o">-&gt;</span><span class="na">shuffle</span><span class="p">(</span><span class="nv">$inputs</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
+
+<span class="c1">// Run the operation</span>
+<span class="nv">$slurpy</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
+</pre></div>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
