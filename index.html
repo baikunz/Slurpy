@@ -41,10 +41,9 @@ either Windows, Mac OSX or linux.</p>
 
 <p><a href="http://travis-ci.org/baikunz/Slurpy"><img src="https://secure.travis-ci.org/baikunz/Slurpy.png?branch=master" alt="Build Status"></a></p>
 
-<h2>Installation using <a href="http://getcomposer.org/">Composer</a>
-</h2>
+<h2>Installation</h2>
 
-<p>Add to your <code>composer.json</code>:</p>
+<p>If you are using <a href="http://getcomposer.org">composer</a> add the following lines to your <code>composer.json</code>:</p>
 
 <div class="highlight"><pre><span class="p">{</span>
     <span class="nt">"require"</span> <span class="p">:</span>  <span class="p">{</span>
@@ -53,23 +52,42 @@ either Windows, Mac OSX or linux.</p>
 <span class="p">}</span>
 </pre></div>
 
-<h2>Installation of the <a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> binary</h2>
+<p>And run these commands:</p>
 
-<p>You have to follow instructions on the pdftk web page to install the pdftk package. Either by downloading
-an installer if you run on Windows or Mac OSX or compiling it from source on linux. </p>
+<pre><code>wget http://getcomposer.org/composer.phar
+php composer.phar install
+</code></pre>
+
+<p>Now, just add the autoloader:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>Or, if you are not using composer, require the provided autoload:</p>
+
+<div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">require</span> <span class="s1">'path/to/slurpy/src/autoload.php'</span><span class="p">;</span>
+</pre></div>
+
+<p>Then proceed with the installation of pdftk if not already installed. Please refer to the 
+<a href="http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> website, and grab the installer
+or sources, depending on your system.</p>
+
+<p>That's it, you're done.</p>
 
 <h2>Simple usage</h2>
 
-<p>Please refer to the <a href="http://www.pdflabs.com/docs/pdftk-man-page/">pdftk documentation</a> for more details
-on each operations.</p>
+<p>Visit the <a href="http://www.pdflabs.com/docs/pdftk-man-page/">pdftk documentation</a> for more details
+about each operations.</p>
 
 <h3>Create the factory</h3>
 
 <p>Slurpy comes with a simple factory for dealing with pdftk operations in their simple forms.</p>
 
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">require_once</span> <span class="s1">'/path/to/slurpy/src/autoload.php'</span><span class="p">;</span>
 
 <span class="c1">// Create a new factory instance, give it your path to pdftk binary</span>
 <span class="nv">$factory</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Shuble\Slurpy\Factory</span><span class="p">(</span><span class="s1">'/path/to/pdftk'</span><span class="p">);</span>
@@ -142,6 +160,24 @@ scanning paper documents.</p>
 <span class="c1">// Run the operation</span>
 <span class="nv">$slurpy</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">();</span>
 </pre></div>
+
+<h2>Unit tests</h2>
+
+<p>Run the following command:</p>
+
+<pre><code>phpunit
+</code></pre>
+
+<p>Done.</p>
+
+<h2>Credits</h2>
+
+<ul>
+<li>dorian ALKOUM - <a href="mailto:baikunz@gmail.com">baikunz@gmail.com</a>
+</li>
+</ul><h2>License</h2>
+
+<p>Slurpy is released under the MIT license. See the provided LICENSE file for more details.</p>
       </section>
       <footer>
         <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
