@@ -9,9 +9,9 @@ either Windows, Mac OSX or linux.
 
 [![Build Status](https://secure.travis-ci.org/baikunz/Slurpy.png?branch=master)](http://travis-ci.org/baikunz/Slurpy)
 
-## Installation using [Composer](http://getcomposer.org/)
+## Installation
 
-Add to your `composer.json`:
+If you are using [composer](http://getcomposer.org) add the following lines to your `composer.json`:
 
 ```json
 {
@@ -21,15 +21,38 @@ Add to your `composer.json`:
 }
 ```
 
-## Installation of the [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) binary
+And run these commands:
 
-You have to follow instructions on the pdftk web page to install the pdftk package. Either by downloading
-an installer if you run on Windows or Mac OSX or compiling it from source on linux. 
+```
+wget http://getcomposer.org/composer.phar
+php composer.phar install
+```
+
+Now, just add the autoloader:
+
+```php
+<?php
+
+require 'vendor/autoload.php';
+```
+
+Or, if you are not using composer, require the provided autoload:
+```php
+<?php
+
+require 'path/to/slurpy/src/autoload.php';
+```
+
+Then proceed with the installation of pdftk if not already installed. Please refer to the 
+[pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) website, and grab the installer
+or sources, depending on your system.
+
+That's it, you're done.
 
 ## Simple usage
 
-Please refer to the [pdftk documentation](http://www.pdflabs.com/docs/pdftk-man-page/) for more details
-on each operations.
+Visit the [pdftk documentation](http://www.pdflabs.com/docs/pdftk-man-page/) for more details
+about each operations.
 
 ### Create the factory
 
@@ -37,8 +60,6 @@ Slurpy comes with a simple factory for dealing with pdftk operations in their si
 
 ```php
 <?php
-
-require_once '/path/to/slurpy/src/autoload.php';
 
 // Create a new factory instance, give it your path to pdftk binary
 $factory = new \Shuble\Slurpy\Factory('/path/to/pdftk');
@@ -113,3 +134,19 @@ $slurpy = $factory->shuffle($inputs, $output);
 // Run the operation
 $slurpy->generate();
 ```
+
+## Unit tests
+
+Run the following command:
+```
+phpunit
+```
+Done.
+
+## Credits
+
+- dorian ALKOUM - baikunz@gmail.com
+
+## License
+
+Slurpy is released under the MIT license. See the provided LICENSE file for more details.
