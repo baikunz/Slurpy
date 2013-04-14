@@ -148,7 +148,6 @@ class Factory
             throw new \InvalidArgumentException('You must specify a filepath for the input file');
         }
 
-        // TODO: deal with null output
         $slurpy = $this->getSlurpy($output);
 
         $inputFile = $this->getInputFile($input);
@@ -175,7 +174,7 @@ class Factory
         return $slurpy;
     }
 
-    public function fillForm($input, $dataFile, $output, $flatten = true)
+    public function fillForm($input, $dataFile, $output, $flatten = false)
     {
         if (is_array($input) && empty($input['filepath'])) {
             throw new \InvalidArgumentException('You must specify a filepath for the input file');
