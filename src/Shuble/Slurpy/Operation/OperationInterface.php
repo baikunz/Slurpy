@@ -17,4 +17,11 @@ interface OperationInterface
      * @return array
      */
     public function getArguments();
+
+    /**
+     * Get the operation's stdin
+     *
+     * @return null|string
+     */
+    public function getStdin();
 }

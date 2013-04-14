@@ -14,4 +14,13 @@ abstract class BaseOperation implements OperationInterface
     {
         return array();
     }
+
+    /**
+     * (non-PHPdoc)
+     * @see \Shuble\Slurpy\Operation\OperationInterface::getStdin()
+     */
+    public function getStdin()
+    {
+        return null;
+    }
 }

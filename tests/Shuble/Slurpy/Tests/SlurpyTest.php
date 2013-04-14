@@ -250,6 +250,12 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array('arg1', 'arg2')))
         ;
 
+        $op
+            ->expects($this->any())
+            ->method('getStdin')
+            ->will($this->returnValue('foobar'))
+        ;
+
         return array(
             array(
                 'thebinary',
@@ -281,7 +287,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 '/the/output/path',
                 $op,
                 array('flatten' => null),
-                'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path'
+                'echo \'foobar\' | thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path'
             ),
             array(
                 'thebinary',
@@ -289,7 +295,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 '/the/output/path',
                 $op,
                 array('flatten' => false),
-                'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path'
+                'echo \'foobar\' | thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path'
             ),
             array(
                 'thebinary',
@@ -297,7 +303,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 '/the/output/path',
                 $op,
                 array('user_pw' => 'foo'),
-                'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path user_pw \'foo\''
+                'echo \'foobar\' | thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path user_pw \'foo\''
             ),
             array(
                 'thebinary',
@@ -305,7 +311,7 @@ class SlurpyTest extends \PHPUnit_Framework_TestCase
                 '/the/output/path',
                 $op,
                 array('allow' => array('foo', 'bar')),
-                'thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path allow \'foo\' \'bar\''
+                'echo \'foobar\' | thebinary HANDLE=/path input_pw HANDLE=pa$$w0rd operation \'arg1\' \'arg2\' output /the/output/path allow \'foo\' \'bar\''
             ),
         );
     }

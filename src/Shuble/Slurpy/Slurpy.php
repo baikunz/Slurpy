@@ -366,6 +366,13 @@ class Slurpy
                 $args = implode(' ', array_map('escapeshellarg', $args));
                 $command .= ' '. $args;
             }
+
+            if (null !== $this->operation->getStdin()) {
+                $command = sprintf("echo %s | %s",
+                    escapeshellarg($this->operation->getStdin()),
+                    $command
+                );
+            }
         }
 
         // Output

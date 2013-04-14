@@ -10,6 +10,8 @@
 
 namespace Shuble\Slurpy;
 
+use Shuble\Slurpy\Operation\OperationArgument\FormData;
+
 use Shuble\Slurpy\Operation\AttachFilesOperation;
 use Shuble\Slurpy\Operation\UpdateInfoOperation;
 use Shuble\Slurpy\Operation\UnpackFilesOperation;
@@ -186,6 +188,10 @@ class Factory
         $slurpy->addInput($inputFile);
 
         $operation = new FillFormOperation();
+        $dataFile = is_array($dataFile)
+            ? new FormData($dataFile)
+            : $dataFile
+        ;
         $operation->setDataFile($dataFile);
         $slurpy->setOperation($operation);
 

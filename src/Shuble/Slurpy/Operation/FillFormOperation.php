@@ -10,21 +10,22 @@
 
 namespace Shuble\Slurpy\Operation;
 
-use Shuble\Slurpy\Operation\OperationInterface;
+use Shuble\Slurpy\Operation\BaseOperation;
+use Shuble\Slurpy\Operation\OperationArgument\FormData;
 
-class FillFormOperation implements OperationInterface
+class FillFormOperation extends BaseOperation
 {
     /**
-     * Path to datafile used to fill the form
+     * Path to datafile used to fill the form or a FormData instance
      *
-     * @var string
+     * @var FormData|string
      */
     protected $dataFile;
 
     /**
      * Set data filepath used to fill the form
      *
-     * @param string $dataFile
+     * @param FormData|string $dataFile
      *
      * @return FillFormOperation
      */
@@ -37,7 +38,8 @@ class FillFormOperation implements OperationInterface
 
     /**
      * Get data filepath used to fill the form
-     * @return string
+     *
+     * @return FormData|string
      */
     public function getDataFile()
     {
@@ -59,6 +61,21 @@ class FillFormOperation implements OperationInterface
      */
     public function getArguments()
     {
-        return array($this->dataFile);
+        return $this->dataFile instanceof FormData
+            ? array('-')
+            : array($this->dataFile)
+        ;
+    }
+
+    /**
+     * (non-PHPdoc)
+     * @see \Shuble\Slurpy\Operation\OperationInterface::getStdin()
+     */
+    public function getStdin()
+    {
+        return $this->dataFile instanceof FormData
+            ? $this->dataFile->getXfdf('bla')
+            : null
+        ;
     }
 }
