@@ -57,20 +57,25 @@ about each operations.
 ### Create the factory
 
 Slurpy comes with a simple factory for dealing with pdftk operations in their simple forms.
+Each call to factory methods returns a Slurpy instance, then you just need to call the `generate`
+method on this Slurpy instance to process the operation.
 
 ```php
 <?php
 
 // Create a new factory instance, give it your path to pdftk binary
 $factory = new \Shuble\Slurpy\Factory('/path/to/pdftk');
+
+$slurpy = $factory->generateFdf('path/to/input.pdf', 'path/to/output.fdf');
+
+$slurpy->generate();
 ```
 
 ### Catenate PDF files
 
-Assembles ("catenates") pages from input PDFs to create a new PDF.
-Use cat to merge PDF pages or to split PDF pages from documents.
-You can also use it to rotate PDF pages. Page order in the new PDF
-is specified by the order of the inputs array.
+The `cat` operation assembles pages from input PDFs to create a new PDF. Use cat to merge PDF pages
+or to split PDF pages from documents. You can also use it to rotate PDF pages. Page order in the
+new PDF is specified by the order of the inputs array.
 
 ```php
 <?php
@@ -92,21 +97,17 @@ $inputs = array(
 
 $output = '/path/to/output.pdf';
 
-// Creates a Slurpy instance
 $slurpy = $factory->cat($inputs, $output);
-
-// Run the operation
-$slurpy->generate();
 ```
 
 Now, `/path/to/ouput.pdf` contains the 3 pdfs, with only odd pages rotated to east for the third pdf. 
 
 ### Shuffle PDF files
 
-Collates pages from input PDFs to create a new PDF. Works like the cat operation except that it takes
-one page at a time from each page range to assemble the output PDF. If one range runs out of pages,
-it continues with the remaining ranges. This feature was designed to help collate PDF pages after
-scanning paper documents.
+The `shuffle` operation collates pages from input PDFs to create a new PDF. Works like the cat
+operation except that it takes one page at a time from each page range to assemble the output PDF.
+If one range runs out of pages, it continues with the remaining ranges. This feature was designed
+to help collate PDF pages after scanning paper documents.
 
 ```php
 <?php
@@ -130,9 +131,85 @@ $output = '/path/to/output.pdf';
 
 // Creates a Slurpy instance
 $slurpy = $factory->shuffle($inputs, $output);
+```
 
-// Run the operation
-$slurpy->generate();
+### Background
+
+The `background` operation Applies a PDF watermark to the background of a single input PDF.
+It uses only the first page from the background PDF and applies it to every page of the input PDF.
+This page is scaled and rotated as needed to fit the input page.
+If the input PDF does not have a transparent background (such as a PDF created from page scans)
+then the resulting background won’t be visible — use the stamp operation instead.
+
+You can also pass a fourth parameter `$multi` if you want to use the multibackground operation.
+
+`multibackground` is the same as the background operation, but applies each page of the
+background PDF to the corresponding page of the input PDF. If the input PDF has more
+pages than the stamp PDF, then the final stamp page is repeated across these remaining
+pages in the input PDF.
+
+```php
+<?php
+
+$input = '/path/to/input.pdf'; // or array('filepath' => '/path/to/input.pdf', 'password' => 'S3cr3t');
+$background = '/path/to/background.pdf';
+$output = '/path/to/output.pdf';
+$multi = false // [Default], Or true for multibackground operation
+
+// Creates a Slurpy instance
+$slurpy = $factory->background($input, $background, $output, $multi);
+```
+
+### Burst
+
+The `burst` operation splits a single, input PDF document into individual pages. Naming for the
+resulting page is specified if a printf-style format string. i.e. if you give an ouput of
+`page_%02d.pdf` to Slurpy, resulting pages are going to be `page_01.pdf`, `page_02.pdf` and so on.
+> NOTE that you may have to give `output` as a complete path such as `/path/to/pdfs/page_%04d.pdf`
+
+```php
+<?php
+
+$input = '/path/to/input.pdf'; // or array('filepath' => '/path/to/input.pdf', 'password' => 'S3cr3t');
+$output = '/path/to/folder/pg_%02d.pdf';
+
+$slurpy = $factory->burst($input, $output);
+```
+
+### Generate fdf
+
+The `generateFdf` operation reads a single, input PDF file and generates an FDF file suitable for `fillForm`
+operation. It saves this FDF file using the output filename.
+
+```php
+<?php
+
+$input = '/path/to/input.pdf'; // or array('filepath' => '/path/to/input.pdf', 'password' => 'S3cr3t');
+$output = '/path/to/folder/output.fdf';
+
+$slurpy = $factory->generateFdf($input, $output);
+```
+
+### Fill form
+
+The `fillForm` operation fills a single input PDF form with the given fdf or xfdf data file.
+By default after filling the form, the ouput pdf fields remains active. You can disable the fields
+from the output pdf by giving `true` as a fourth argument which will `flatten` the resulting
+pdf.
+> NOTE That Slurpy will soon be able to fill forms with simple key/value pairs as data instead of
+fdf or xfdf files.
+
+```php
+<?php
+
+$input = '/path/to/input.pdf'; // or array('filepath' => '/path/to/input.pdf', 'password' => 'S3cr3t');
+$data = '/path/to/data.fdf'; // or data.xfdf
+$output = '/path/to/folder/output.fdf';
+
+$slurpy = $factory->fillForm($input, $data, $output);
+
+// Or to flatten the resulting pdf.
+$slurpy = $factory->fillForm($input, $data, $output, true);
 ```
 
 ## Unit tests
