@@ -375,7 +375,7 @@ class Factory
      */
     protected function generateFileHandle($index)
     {
-        if (1 === $version)
+        if (1 === $this->version)
             return chr(65 + $index % 26);
         return chr(65 + floor($index/26) % 26) . chr(65 + $index % 26);
     }
