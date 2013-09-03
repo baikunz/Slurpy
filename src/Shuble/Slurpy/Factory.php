@@ -38,15 +38,23 @@ class Factory
      * @var string
      */
     protected $binary;
+    
+    /**
+     * Version of pdftk, 1.x (1) or 2.x (2)
+     * 
+     * @var integer
+     */
+    protected $version;
 
     /**
      * Constructor
      *
      * @param string $binary
      */
-    public function __construct($binary)
+    public function __construct($binary, $version = 2)
     {
         $this->binary = $binary;
+        $this->version = $version;
     }
 
     /**
@@ -367,6 +375,8 @@ class Factory
      */
     protected function generateFileHandle($index)
     {
+        if (1 === $version)
+            return chr(65 + $index % 26);
         return chr(65 + floor($index/26) % 26) . chr(65 + $index % 26);
     }
 }
