@@ -367,6 +367,6 @@ class Factory
      */
     protected function generateFileHandle($index)
     {
-        return chr(65 + floor($index/26) % 26) . chr(65 + $index % 26);
+        return (($index >= 26) ? chr(65 + (floor($index / 26) - 1) % 26) : '') . chr(65 + $index % 26);
     }
 }
