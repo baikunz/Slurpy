@@ -1,6 +1,6 @@
 # Slurpy
 
-Slurpy is a PHP5 wrapper for the [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) command-line tool
+Slurpy is a PHP wrapper for the [pdftk](http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) command-line tool
 for working with PDF. This library is largely inspired by [Snappy](https://github.com/KnpLabs/snappy) from KnpLabs, 
 a library for generating images or pdf from html. Some of the Slurpy code comes directly from Snappy.
 
